@@ -18,9 +18,23 @@
 (tool-bar-mode -1)
 (when (display-graphic-p) (toggle-scroll-bar -1))
 (savehist-mode 1)
-;;(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type 'relative)
 (setq c-default-style "linux"
       c-basic-offset 4)
+(global-set-key (kbd "C-x u") 'goto-last-change)
+(global-set-key (kbd "C-x U") 'goto-last-change-reverse)
+
+(use-package vterm
+  :ensure t
+  :config
+  (setq vterm-max-scrollback 10000)
+  (setq vterm-shell "/bin/bash")
+  (define-key vterm-mode-map (kbd "C-c C-c") 'vterm-send-C-c))
+(defun my/vterm-new ()
+  (interactive)
+  (let ((buf (generate-new-buffer-name "*vterm*")))
+    (vterm buf)))
+(global-set-key (kbd "C-c n") 'my/vterm-new)
 
 (use-package lsp-mode
   :ensure t
@@ -34,6 +48,13 @@
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode)
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+(with-eval-after-load 'lsp-mode
+  (require 'flycheck)
+  (setq lsp-prefer-flycheck t))
 
 (use-package clang-format
   :ensure t
@@ -61,3 +82,16 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (provide 'init)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(xterm-color popwin lsp-ui flycheck company clang-format ace-window)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
