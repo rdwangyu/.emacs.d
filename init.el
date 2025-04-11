@@ -6,6 +6,8 @@
 (eval-when-compile
   (require 'use-package))
 
+;;C-x r m/b/l bookmark-set bookmark-jump bookmark-list
+
 (electric-pair-mode t)
 (add-hook 'prog-mode-hook #'show-paren-mode)
 (column-number-mode t)
@@ -21,8 +23,8 @@
 (setq display-line-numbers-type 'relative)
 (setq c-default-style "linux"
       c-basic-offset 4)
-(global-set-key (kbd "C-x u") 'goto-last-change)
-(global-set-key (kbd "C-x U") 'goto-last-change-reverse)
+
+(global-set-key (kbd "C-;") 'avy-goto-char)
 
 (use-package vterm
   :ensure t
@@ -81,7 +83,6 @@
 (set-frame-font "Monaco 10" nil t)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-(provide 'init)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -95,3 +96,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(require 'tramp)
+(setq tramp-default-method "ssh")
+(global-set-key (kbd "C-c s") 
+                (lambda () (interactive) 
+                  (find-file "/ssh:greatwall@192.168.2.192:dev/dy-gold-recovery-sys")))
+
+(provide 'init)
