@@ -4,3 +4,7 @@ history
 auto-save-list
 org-persisteshell/
 shell/
+.lsp-session-*
+bookmarks
+eshell/
+
