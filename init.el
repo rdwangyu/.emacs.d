@@ -80,6 +80,13 @@
 (require 'popwin)
 (popwin-mode 1)
 
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-tools-install)
+  (setq pdf-view-use-scaling t)
+  (setq pdf-view-use-imagemagick nil))
+
 (set-frame-font "Monaco 10" nil t)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
