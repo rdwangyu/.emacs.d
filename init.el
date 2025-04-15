@@ -6,8 +6,6 @@
 (eval-when-compile
   (require 'use-package))
 
-;;C-x r m/b/l bookmark-set bookmark-jump bookmark-list
-
 (electric-pair-mode t)
 (add-hook 'prog-mode-hook #'show-paren-mode)
 (column-number-mode t)
@@ -47,6 +45,18 @@
    (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 
+(use-package treemacs
+  :ensure t
+  :config
+  (treemacs-load-theme "Default"))
+
+(use-package lsp-treemacs
+  :ensure t
+  :after (lsp-mode treemacs)
+  :commands (lsp-treemacs-call-hierarchy))
+(global-set-key (kbd "C-c l c h") 'lsp-treemacs-call-hierarchy)
+(global-set-key (kbd "C-c l f r") 'lsp-find-references)
+
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode)
@@ -63,6 +73,10 @@
   :hook (c++-mode . (lambda ()
                       (local-set-key (kbd "C-c f") 'clang-format-buffer))))
 (setq clang-format-style-option "file")
+
+(use-package helm-lsp
+  :ensure t
+  :commands helm-lsp-workspace-symbol)
 
 
 (use-package ace-window
