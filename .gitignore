@@ -6,7 +6,8 @@ org-persisteshell/
 shell/
 .lsp-session-*
 bookmarks
-eshell/
-
+eshell
 tramp
 session.*
+.emacs.desktop*
+custom-pdf-restore-file

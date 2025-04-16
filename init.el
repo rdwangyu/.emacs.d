@@ -14,15 +14,18 @@
 (setq inhibit-startup-message t)
 (setq make-backup-files nil)
 (add-hook 'prog-mode-hook #'hs-minor-mode)
-(global-display-line-numbers-mode 1)
 (tool-bar-mode -1)
 (when (display-graphic-p) (toggle-scroll-bar -1))
 (savehist-mode 1)
-(setq display-line-numbers-type 'relative)
 (setq c-default-style "linux"
       c-basic-offset 4)
 
 (global-set-key (kbd "C-;") 'avy-goto-char)
+
+(use-package indent-guide
+  :ensure t
+  :config
+  (indent-guide-global-mode t))
 
 (use-package vterm
   :ensure t
@@ -87,7 +90,6 @@
   :ensure t)
 (add-hook 'after-init-hook 'global-company-mode)
 
-(load-theme 'manoj-dark t)
 
 (use-package popwin
   :ensure t)
@@ -97,12 +99,20 @@
 (use-package pdf-tools
   :ensure t
   :config
-  (pdf-tools-install)
-  (setq pdf-view-use-scaling t)
-  (setq pdf-view-use-imagemagick nil))
+  (pdf-tools-install))
+(use-package pdf-view-restore
+  :ensure t
+  :hook (pdf-view-mode . pdf-view-restore-mode))
+(setq pdf-view-restore-filename "~/.emacs.d/custom-pdf-restore-file")
+
+(use-package modus-themes
+  :ensure t
+  :config
+  (load-theme 'modus-vivendi t))
 
 (set-frame-font "Monaco 10" nil t)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -110,7 +120,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(xterm-color popwin lsp-ui flycheck company clang-format ace-window)))
+   '(indent-guide xterm-color popwin lsp-ui flycheck company clang-format ace-window)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -120,8 +130,13 @@
 
 (require 'tramp)
 (setq tramp-default-method "ssh")
-(global-set-key (kbd "C-c s") 
-                (lambda () (interactive) 
-                  (find-file "/ssh:greatwall@192.168.2.192:dev/dy-gold-recovery-sys")))
+;;;(global-set-key (kbd "C-c s") 
+;;;                (lambda () (interactive) 
+;;;                  (find-file "/ssh:greatwall@192.168.2.192:dev/dy-gold-recovery-sys")))
+
+(defun open-emacs-config ()
+  (interactive)
+  (find-file "~/.emacs.d/init.el"))
+(global-set-key (kbd "C-c e") 'open-emacs-config)
 
 (provide 'init)
