@@ -11,3 +11,4 @@ tramp
 session.*
 .emacs.desktop*
 custom-pdf-restore-file
+.cache*

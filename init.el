@@ -11,30 +11,44 @@
   :config
   (indent-guide-global-mode t))
 
-(use-package qt-pro-mode
+(use-package vterm
   :ensure t
-  :mode ("\\.pro\\'" "\\.pri\\'"))
+  :config
+  (setq vterm-max-scrollback 10000))
 
 (use-package lsp-mode
   :ensure t
+  :hook (
+	 (c-mode . lsp)
+	 (c++-mode . lsp)
+	 (csharp-mode . lsp)
+	 )
+  :commands lsp
   :init
   (setq lsp-keymap-prefix "C-c l")
-  :hook
-  ((c++-mode . lsp)
-   (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+  )
 
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode))
+  :init
+  (setq flycheck-global-modes '(not t))
+  :hook
+  (c++-mode . flycheck-mode)
+  (c-mode . flycheck-mode)
+  (csharp-mode . flycheck-mode))
 (with-eval-after-load 'lsp-mode
   (require 'flycheck)
   (setq lsp-prefer-flycheck t))
 
-(use-package clang-format
+;;; todo
+(use-package format-all
   :ensure t
-  :hook (c++-mode . (lambda ()
-                      (setq clang-format-style-option "file"))))
+  :hook ((c-mode c++-mode csharp-mode) . format-all-mode)
+  :config
+  (setq format-all-formatters
+	'((c-mode          . ("clang-format"))
+	  (c++-mode        . ("clang-format"))
+	  (csharp-mode     . ("dotnet-csharpier")))))
 
 (use-package helm-lsp
   :ensure t
@@ -57,7 +71,6 @@
   :config
   (load-theme 'modus-vivendi t))
 ;; ============================================ Package end
-
 
 
 
@@ -110,17 +123,14 @@
 
 
 
-
-
 ;; Keyboard ===========================================================
 (global-set-key (kbd "C-;") 'avy-goto-char)
 (global-set-key (kbd "C-c l c h") 'lsp-treemacs-call-hierarchy)
 (global-set-key (kbd "C-c l f r") 'lsp-find-references)
-(add-hook 'c++-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c f") 'clang-format-buffer))
-	  (global-set-key (kbd "M-o") 'ace-window))
 (global-set-key (kbd "C-c e") 'open-emacs-config)
+(global-set-key (kbd "M-o") 'ace-select-window)
+(global-set-key (kbd "C-c t") 'vterm)
+(global-set-key (kbd "C-c f") 'format-all-buffer)
 ;; ========================================================== Keyboard end
 
 
@@ -131,7 +141,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(package-selected-packages
+   '(ace-window auto-complete company flycheck format-all helm-lsp
+		indent-guide modus-themes popwin vterm)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
