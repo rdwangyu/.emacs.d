@@ -54,6 +54,14 @@
   :ensure t
   :config
   (load-theme 'modus-vivendi t))
+(use-package treemacs
+  :ensure t
+  :defer t
+  :config
+  (treemacs-follow-mode t) ; 自动跟随当前文件
+  (treemacs-filewatch-mode t) ; 监听文件变化
+  :bind
+  ("C-x t" . treemacs)) ; 全局快捷键
 (column-number-mode t)
 (electric-pair-mode t)
 (add-hook 'prog-mode-hook #'show-paren-mode)
