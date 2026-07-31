@@ -83,6 +83,7 @@
   :bind
   ("C-x t" . treemacs)) ; 全局快捷键
 
+(global-hl-line-mode 1)
 (column-number-mode t)
 (electric-pair-mode 1)
 (add-hook 'prog-mode-hook #'show-paren-mode)
@@ -90,7 +91,7 @@
 (tool-bar-mode -1)
 (setq toggle-scroll-bar -1)
 (savehist-mode 1)
-(set-frame-font "Monaco 8" nil t)
+(set-frame-font "Monaco 10" nil t)
 ;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 (defun open-emacs-config ()
   (interactive)
