@@ -48,11 +48,6 @@
   (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
 
-
-(use-package apheleia
-  :config
-  (apheleia-global-mode +1))
-
 (use-package projectile
   :config
   (projectile-mode +1)
@@ -81,7 +76,7 @@
   (treemacs-follow-mode t) ; 自动跟随当前文件
   (treemacs-filewatch-mode t) ; 监听文件变化
   :bind
-  ("C-x t" . treemacs)) ; 全局快捷键
+  ("C-c t" . treemacs)) ; 全局快捷键
 
 (global-hl-line-mode 1)
 (column-number-mode t)

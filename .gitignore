@@ -4,3 +4,5 @@ history
 projectile-*
 projects
 .cache/
+tramp
+transient/
