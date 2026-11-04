@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require 'package)
 (setq package-archives
       '(("gnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
@@ -87,7 +88,6 @@
 (setq toggle-scroll-bar -1)
 (savehist-mode 1)
 (set-frame-font "Monaco 10" nil t)
-(setq confirm-kill-emacs 'yes-or-no-p)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (defun open-emacs-config ()
   (interactive)
@@ -102,7 +102,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(package-selected-packages
+   '(cape corfu magit marginalia modus-themes projectile treemacs vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
